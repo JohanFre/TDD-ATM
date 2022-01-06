@@ -70,7 +70,7 @@ public class ATM {
 
     public int depositCurrency(Bank bank) {
 
-        return Bank.depositFunds(amountInput(), bank.getCurrency());
+        return bank.depositFunds(amountInput(), bank.getCurrency());
 
     }
 

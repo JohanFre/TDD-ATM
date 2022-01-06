@@ -67,34 +67,31 @@ class ATMTest {
     @Test
     void deposit_Currency_To_Account(){
 
-        when(bank.getCurrency()).thenReturn(100);
-
-        atm.depositCurrency(bank);
+        int getCurrencyReturn = 100;
+        when(bank.getCurrency()).thenReturn(getCurrencyReturn);
+        when(bank.depositFunds(500, bank.getCurrency())).thenReturn(600);
 
         int expected = 600;
         int actual = atm.depositCurrency(bank);
 
         assertEquals(expected, actual);
+        verify(bank).depositFunds(anyInt(), anyInt());
 
-        System.out.println(atm.depositCurrency(bank));
-
-        // Får inte rätt på verify.
-        //verify(bank).depositFunds(anyInt(), anyInt());
     }
 
     // Withdraw currency.
     @Test
     void withdraw_Amount_From_Account(){
-        when(bank.getCurrency()).thenReturn(1000);
+
+        int getCurrencyReturn = 1000;
+        when(bank.getCurrency()).thenReturn(getCurrencyReturn);
+        when(bank.withdrawFunds(500, bank.getCurrency())).thenReturn(500);
 
         int expected = 500;
         int actual = atm.withdrawAmount(bank);
 
-        System.out.println(atm.withdrawAmount(bank));
         assertEquals(expected, actual);
-
-        // Får inte rätt på verify.
-        //verify(bank).withdrawFunds(anyInt(), anyInt());
+        verify(bank).withdrawFunds(anyInt(), anyInt());
     }
 
     // Check amount of currency.

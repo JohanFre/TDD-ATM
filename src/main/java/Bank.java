@@ -75,13 +75,13 @@ public class Bank {
         return bank;
     }
 
-    public static int depositFunds(int amount, int currency){
+    public int depositFunds(int amount, int currency){
 
         int total = amount + currency;
 
         return total;
     }
-    public static int withdrawFunds(int amount, int currency){
+    public int withdrawFunds(int amount, int currency){
 
 
         int total = currency - amount;

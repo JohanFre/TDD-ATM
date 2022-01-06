@@ -17,18 +17,18 @@ class ATMTest {
     private Bank bank;
 
     // Setup and mocking on Bank class.
-//    @BeforeEach
-//    void setup(){
-//
-//        bank = mock(Bank.class);
-//        atm = new ATM(bank);
-//
-//    }
+   @BeforeEach
+   void setup() {
+       bank = mock(Bank.class);
+       atm = new ATM(bank);
+   }
 
     // Test for PIN input.
     @Test
     void check_pin() {
-        Bank bank = new Bank("Test Driven", 123, 123, 0, 123321, false);
+
+        when(bank.getPin()).thenReturn(123);
+        when(bank.getPinCounter()).thenReturn(0);
 
         int expected = 123;
         int actual = atm.checkPin(bank);
@@ -39,7 +39,8 @@ class ATMTest {
     // Check if card is frozen.
     @Test
     void check_If_Card_Is_Locked() {
-        Bank bank = new Bank("Test Driven", 123, 123, 0, 123321, false);
+
+        when(bank.isLockedCard()).thenReturn(false);
 
         boolean expected = false;
         boolean actual = atm.isCardFrozen(bank);
@@ -51,20 +52,22 @@ class ATMTest {
     // Not enough funds on the account.
     @Test
     void should_Return_False_If_Not_Enough_Funds(){
-        Bank bank = new Bank("Test Driven", 123, 123, 0, 150, false);
 
-        boolean expected1 = false;
-        boolean actual1 = atm.withdrawAccepted(bank);
+        when(bank.getCurrency()).thenReturn(1);
+
+        boolean expected = false;
+        boolean actual = atm.withdrawAccepted(bank);
 
         System.out.println("Withdraw successful = " + atm.withdrawAccepted(bank));
-        assertEquals(expected1,actual1);
+        assertEquals(expected,actual);
 
     }
 
     // Deposit currency.
     @Test
     void deposit_Currency_To_Account(){
-        Bank bank = new Bank("Test Driven", 123, 123, 0, 100, false);
+
+        when(bank.getCurrency()).thenReturn(100);
 
         atm.depositCurrency(bank);
 
@@ -82,7 +85,7 @@ class ATMTest {
     // Withdraw currency.
     @Test
     void withdraw_Amount_From_Account(){
-        Bank bank = new Bank("Test Driven", 123, 123, 0, 1000, false);
+        when(bank.getCurrency()).thenReturn(1000);
 
         int expected = 500;
         int actual = atm.withdrawAmount(bank);
@@ -97,7 +100,8 @@ class ATMTest {
     // Check amount of currency.
     @Test
     void check_Amount_On_Account(){
-        Bank bank = new Bank("Test Driven", 123, 123, 0, 1000, false);
+
+        when(bank.getCurrency()).thenReturn(1000);
 
         int expected = 1000;
         int actual = atm.checkAmount(bank);
